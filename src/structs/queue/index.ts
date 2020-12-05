@@ -1,2 +1,7 @@
 import Queue from "./Queue";
-export { Queue };
+import PriorityQueue from "./PriorityQueue";
+
+export {
+  PriorityQueue,
+  Queue
+};

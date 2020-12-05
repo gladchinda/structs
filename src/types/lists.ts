@@ -39,34 +39,29 @@ export interface IDoublyLinkedList<T, ListNode extends IDoublyLinkedListNode<T>>
   traverseFromEnd(): Generator<ListNode, void, unknown>;
 }
 
-export interface IStack<T> {
+interface IFixedSizeList {
   readonly size: number;
   readonly free: number;
   readonly empty: boolean;
-  readonly list: ISinglyLinkedList<T, ILinkedListNode<T>>;
-  peek(): ILinkedListNode<T>;
+}
+
+interface IPeekableList<T, ListNode extends ILinkedListNode<T>> {
+  peek(): ListNode;
+}
+
+export interface IStack<T> extends IFixedSizeList, IPeekableList<T, ILinkedListNode<T>> {
   pop(): ILinkedListNode<T>;
   push(data: T): IStack<T>;
 }
 
-export interface IQueue<T> {
-  readonly size: number;
-  readonly free: number;
-  readonly empty: boolean;
-  readonly list: ISinglyLinkedList<T, ILinkedListNode<T>> & ITailedLinkedList<T, ILinkedListNode<T>>;
-  peek(): ILinkedListNode<T>;
+export interface IQueue<T> extends IFixedSizeList, IPeekableList<T, ILinkedListNode<T>> {
   dequeue(): ILinkedListNode<T>;
   enqueue(data: T): IQueue<T>;
 }
 
-export interface ILRUCache<K, T> {
-  readonly size: number;
-  readonly free: number;
-  readonly empty: boolean;
-  readonly map: Map<K, ICacheListNode<K, T>>;
-  readonly list: IDoublyLinkedList<T, ICacheListNode<K, T>>;
+export interface ILRUCache<K, T> extends IFixedSizeList {
   clear(): void;
   delete(key: K): T;
   get(key: K): T;
-  put(key: K, data: T): void | number;
+  put(key: K, data: T): void;
 }

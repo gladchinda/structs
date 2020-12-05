@@ -5,30 +5,37 @@ import { IStack, ILinkedListNode } from "../../types/lists";
 class Stack<T> implements IStack<T> {
   size: number;
   free: number;
-  list: SinglyLinkedList<T, ILinkedListNode<T>>;
+  empty: boolean;
+  peek: () => ILinkedListNode<T>;
+  pop: () => ILinkedListNode<T>;
+  push: (data: T) => IStack<T>;
 
   constructor(size: number) {
-    const list = new SinglyLinkedList<T, ILinkedListNode<T>>();
-
     if (!(Number.isInteger(size) && size > 0)) {
       size = Infinity;
     }
 
     let free = size;
-    const _pop = this.pop.bind(this);
-    const _push = this.push.bind(this);
+    const list = new SinglyLinkedList<T, ILinkedListNode<T>>();
 
     Object.defineProperties(this, {
-      list: { value: list },
       size: { value: size },
 
       free: {
         get() { return free }
       },
 
+      empty: {
+        get() { return list.head === null }
+      },
+
+      peek: {
+        value() { return list.head }
+      },
+
       pop: {
         value() {
-          const removed = _pop();
+          const removed = this.empty ? null : list.removeBeginning();
           if (removed) free++;
           return removed;
         }
@@ -40,29 +47,12 @@ class Stack<T> implements IStack<T> {
             throw new Error('Maximum stack size exceeded.');
           }
 
-          _push(data);
+          list.insertBeginning(new LinkedListNode<T, ILinkedListNode<T>>(data));
           free--;
           return this;
         }
       }
     });
-  }
-
-  get empty() {
-    return this.list.head === null;
-  }
-
-  peek() {
-    return this.list.head;
-  }
-
-  pop() {
-    return this.empty ? null : this.list.removeBeginning();
-  }
-
-  push(data: T) {
-    this.list.insertBeginning(new LinkedListNode<T, ILinkedListNode<T>>(data));
-    return this;
   }
 }
 
