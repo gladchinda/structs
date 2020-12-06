@@ -1,2 +1,7 @@
+import LFUCache from "./LFUCache";
 import LRUCache from "./LRUCache";
-export { LRUCache };
+
+export {
+  LFUCache,
+  LRUCache
+};

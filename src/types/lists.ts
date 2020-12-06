@@ -59,9 +59,12 @@ export interface IQueue<T> extends IFixedSizeList, IPeekableList<T, ILinkedListN
   enqueue(data: T): IQueue<T>;
 }
 
-export interface ILRUCache<K, T> extends IFixedSizeList {
-  clear(): void;
-  delete(key: K): T;
+export interface ICache<K, T> extends IFixedSizeList {
   get(key: K): T;
   put(key: K, data: T): void;
+}
+
+export interface ILRUCache<K, T> extends ICache<K, T> {
+  clear(): void;
+  delete(key: K): T;
 }

@@ -16,7 +16,7 @@ class LRUCache<K, T> implements ILRUCache<K, T> {
       size = Infinity;
     }
 
-    size = Math.min(size, 10);
+    // size = Math.min(size, 10);
 
     let free = size;
     const map = new Map<K, ICacheListNode<K, T>>();
