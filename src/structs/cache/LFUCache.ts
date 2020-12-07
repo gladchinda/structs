@@ -20,7 +20,7 @@ class LFUCache<K, T> implements ICache<K, T> {
   get: (key: K) => T;
   put: (key: K, data: T) => void;
 
-  constructor(size: number) {
+  constructor(size?: number) {
     if (!(Number.isInteger(size) && size > 0)) {
       size = Infinity;
     }

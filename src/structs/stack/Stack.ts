@@ -6,11 +6,11 @@ class Stack<T> implements IStack<T> {
   size: number;
   free: number;
   empty: boolean;
-  peek: () => ILinkedListNode<T>;
-  pop: () => ILinkedListNode<T>;
+  peek: () => T;
+  pop: () => T;
   push: (data: T) => IStack<T>;
 
-  constructor(size: number) {
+  constructor(size?: number) {
     if (!(Number.isInteger(size) && size > 0)) {
       size = Infinity;
     }
@@ -30,14 +30,14 @@ class Stack<T> implements IStack<T> {
       },
 
       peek: {
-        value() { return list.head }
+        value() { return list.head && list.head.data }
       },
 
       pop: {
         value() {
           const removed = this.empty ? null : list.removeBeginning();
           if (removed) free++;
-          return removed;
+          return removed && removed.data;
         }
       },
 

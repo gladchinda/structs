@@ -45,17 +45,17 @@ interface IFixedSizeList {
   readonly empty: boolean;
 }
 
-interface IPeekableList<T, ListNode extends ILinkedListNode<T>> {
-  peek(): ListNode;
+interface IPeekableList<T> {
+  peek(): T;
 }
 
-export interface IStack<T> extends IFixedSizeList, IPeekableList<T, ILinkedListNode<T>> {
-  pop(): ILinkedListNode<T>;
+export interface IStack<T> extends IFixedSizeList, IPeekableList<T> {
+  pop(): T;
   push(data: T): IStack<T>;
 }
 
-export interface IQueue<T> extends IFixedSizeList, IPeekableList<T, ILinkedListNode<T>> {
-  dequeue(): ILinkedListNode<T>;
+export interface IQueue<T> extends IFixedSizeList, IPeekableList<T> {
+  dequeue(): T;
   enqueue(data: T): IQueue<T>;
 }
 

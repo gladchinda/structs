@@ -6,11 +6,11 @@ class Queue<T> implements IQueue<T> {
   size: number;
   free: number;
   empty: boolean;
-  peek: () => ILinkedListNode<T>;
-  dequeue: () => ILinkedListNode<T>;
+  peek: () => T;
+  dequeue: () => T;
   enqueue: (data: T) => IQueue<T>;
 
-  constructor(size: number) {
+  constructor(size?: number) {
     if (!(Number.isInteger(size) && size > 0)) {
       size = Infinity;
     }
@@ -30,14 +30,14 @@ class Queue<T> implements IQueue<T> {
       },
 
       peek: {
-        value() { return list.head }
+        value() { return list.head && list.head.data }
       },
 
       dequeue: {
         value() {
           const removed = this.empty ? null : list.removeBeginning();
           if (removed) free++;
-          return removed;
+          return removed && removed.data;
         }
       },
 
